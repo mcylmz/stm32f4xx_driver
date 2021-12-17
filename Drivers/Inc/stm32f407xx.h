@@ -139,4 +139,15 @@ typedef struct
 #define GPIOH_PCLK_DISABLE()			(RCC->AHB1ENR &= ~(1 << 7))
 #define GPIOI_PCLK_DISABLE()			(RCC->AHB1ENR &= ~(1 << 8))
 
+/*******************************************************************************
+ * 						Generic macros						   				   *
+ ******************************************************************************/
+#define ENABLE		1
+#define DISABLE		0
+#define	SET			ENABLE
+#define RESET		DISABLE
+
+#define GPIO_PIN_SET		SET
+#define GPIO_PIN_RESET		RESET
+
 #endif /* INC_STM32F407XX_H_ */
