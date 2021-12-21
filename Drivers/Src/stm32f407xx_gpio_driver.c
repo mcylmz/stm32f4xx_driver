@@ -269,7 +269,7 @@ uint8_t gpio_read_from_input_pin(gpio_regdef_t *p_gpiox, uint8_t pin_number)
 uint16_t gpio_read_from_input_port(gpio_regdef_t *p_gpiox)
 {
 	uint16_t value;
-	value = (uint16t)p_gpiox->IDR;
+	value = (uint16_t)p_gpiox->IDR;
 
 	return value;
 }
