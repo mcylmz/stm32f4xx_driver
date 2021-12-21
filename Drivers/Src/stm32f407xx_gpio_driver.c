@@ -241,13 +241,18 @@ void gpio_uninit(gpio_regdef_t *p_gpiox)
  * @param[in]	- Pointer to register definition structure.
  * @param[in]	- Pin number.
  *
- * @return		- Read value.
+ * @return		- Read value. - 0 or 1.
  *
  * @Note		- none
  ******************************************************************************/
 uint8_t gpio_read_from_input_pin(gpio_regdef_t *p_gpiox, uint8_t pin_number)
 {
+	// Shift the read value to least significant bit location and read from that
+	// location.
+	uint8_t value;
+	value = (uint8_t)((p_gpiox->IDR >> pin_number) & (0x00000001));
 
+	return value;
 }
 
 /*******************************************************************************
@@ -263,7 +268,10 @@ uint8_t gpio_read_from_input_pin(gpio_regdef_t *p_gpiox, uint8_t pin_number)
  ******************************************************************************/
 uint16_t gpio_read_from_input_port(gpio_regdef_t *p_gpiox)
 {
+	uint16_t value;
+	value = (uint16t)p_gpiox->IDR;
 
+	return value;
 }
 
 /*******************************************************************************
@@ -281,7 +289,16 @@ uint16_t gpio_read_from_input_port(gpio_regdef_t *p_gpiox)
  ******************************************************************************/
 void gpio_write_to_output_pin(gpio_regdef_t *p_gpiox, uint8_t pin_number, int8_t value)
 {
-
+	if (value == GPIO_PIN_SET)
+	{
+		// Write 1 to the output data register of specified pin number.
+		p_gpiox->ODR |= (1 << pin_number);
+	}
+	else
+	{
+		// Write 0 to the output data register of specified pin number.
+		p_gpiox->ODR &= ~(1 << pin_number);
+	}
 }
 
 /*******************************************************************************
@@ -298,7 +315,7 @@ void gpio_write_to_output_pin(gpio_regdef_t *p_gpiox, uint8_t pin_number, int8_t
  ******************************************************************************/
 void gpio_write_to_output_port(gpio_regdef_t *p_gpiox, int16_t value)
 {
-
+	p_gpiox->ODR = value;
 }
 
 /*******************************************************************************
@@ -315,7 +332,7 @@ void gpio_write_to_output_port(gpio_regdef_t *p_gpiox, int16_t value)
  ******************************************************************************/
 void gpio_toggle_output_pin(gpio_regdef_t *p_gpiox, uint8_t pin_number)
 {
-
+	p_gpiox->ODR ^= (1 << pin_number);
 }
 
 /*******************************************************************************
