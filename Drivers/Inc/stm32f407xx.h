@@ -10,7 +10,31 @@
 
 #include <stdint.h>
 
-// Device memory base addresses (Flash and SRAM)
+/*******************************************************************************
+ * 						Processor specific details							   *
+ ******************************************************************************/
+
+// ARM Cortex-Mx processor NVIC ISERx register addresses
+#define NVIC_ISER0			(volatile uint32_t *)0xE000E100
+#define NVIC_ISER1			(volatile uint32_t *)0xE000E104
+#define NVIC_ISER2			(volatile uint32_t *)0xE000E108
+#define NVIC_ISER3			(volatile uint32_t *)0xE000E11C
+
+// ARM Cortex-Mx processor NVIC ICERx register addresses
+#define NVIC_ICER0			(volatile uint32_t *)0XE000E180
+#define NVIC_ICER1			(volatile uint32_t *)0XE000E184
+#define NVIC_ICER2			(volatile uint32_t *)0XE000E188
+#define NVIC_ICER3			(volatile uint32_t *)0XE000E19C
+
+// ARM Cortex-Mx processor IPR - priority register address calculation
+#define NVIC_IPR_BASE_ADDR	(volatile uint32_t *)0xE000E400
+
+// Generic macros
+#define NO_PR_BITS_IMPLEMENTED		4
+
+/*******************************************************************************
+ * 						Device memory base addresses (Flash and SRAM)		   *
+ ******************************************************************************/
 #define FLASH_BASE_ADDR		0x08000000U
 #define SRAM1_BASE_ADDR		0x20000000U
 #define SRAM2_BASE_ADDR		0x2001C000U
@@ -38,6 +62,12 @@
 #define GPIOG_BASE_ADDR		(AHB1_BASE_ADDR + 0x1800)
 #define GPIOH_BASE_ADDR		(AHB1_BASE_ADDR + 0x1C00)
 #define GPIOI_BASE_ADDR		(AHB1_BASE_ADDR + 0x2000)
+
+// EXTI peripheral base address
+#define EXTI_BASE_ADDR		(APB2_BASE_ADDR + 0x3C00)
+
+// SYSCFG peripheral base address
+#define SYSCFG_BASE_ADDR	(APB2_BASE_ADDR + 0x3800)
 
 /*******************************************************************************
  * 						Peripheral register definitions						   *
@@ -95,6 +125,30 @@ typedef struct
 	volatile uint32_t AFR[2]; // Alternate function low and high registers
 } gpio_regdef_t;
 
+// EXTI register definition structure
+typedef struct
+{
+	volatile uint32_t IMR;
+	volatile uint32_t EMR;
+	volatile uint32_t RTSR;
+	volatile uint32_t FTSR;
+	volatile uint32_t SWIER;
+	volatile uint32_t PR;
+} exti_regdef_t;
+
+// SYSCFG register definition structure
+typedef struct
+{
+	volatile uint32_t MEMRMP;
+	volatile uint32_t PMC;
+	volatile uint32_t EXTICR[4];
+	uint32_t RESERVED1[2];
+	volatile uint32_t CMPCR;
+	volatile uint32_t RESERVED2[2];
+	uint32_t CFGR;
+} syscfg_regdef_t;
+
+
 /*******************************************************************************
  * 						Peripheral definitions						           *
  ******************************************************************************/
@@ -112,6 +166,12 @@ typedef struct
 #define GPIOG		((gpio_regdef_t *)GPIOG_BASE_ADDR)
 #define GPIOH		((gpio_regdef_t *)GPIOH_BASE_ADDR)
 #define GPIOI		((gpio_regdef_t *)GPIOI_BASE_ADDR)
+
+// EXTI
+#define EXTI 		((exti_regdef_t *)EXTI_BASE_ADDR)
+
+// SYSCFG
+#define SYSCFG		((syscfg_regdef_t *)SYSCFG_BASE_ADDR)
 
 /*******************************************************************************
  * 						Clock enable and disable macros						   *
@@ -139,6 +199,12 @@ typedef struct
 #define GPIOH_PCLK_DISABLE()		(RCC->AHB1ENR &= ~(1 << 7))
 #define GPIOI_PCLK_DISABLE()		(RCC->AHB1ENR &= ~(1 << 8))
 
+// SYSCFG clock enable
+#define SYSCFG_PCLK_ENABLE()		(RCC->APB2ENR |= (1 << 14))
+
+// SYSCFG clock disable
+#define SYSCFG_PCLK_DISABLE()		(RCC->APB2ENR &= ~(1 << 14))
+
 /*******************************************************************************
  * 						MACROS TO RESET PERIPHERALS							   *
  ******************************************************************************/
@@ -155,6 +221,29 @@ typedef struct
 #define GPIOI_REG_RESET()			do { (RCC->AHB1RSTR |= (1 << 8)); (RCC->AHB1RSTR &= ~(1 << 8)); } while(0)
 
 /*******************************************************************************
+ * 						Utility macros						   				   *
+ ******************************************************************************/
+#define GPIO_BASE_ADDR_TO_PORT_CODE(x)		(x == GPIOA) ? 0 : \
+											(x == GPIOB) ? 1 : \
+											(x == GPIOC) ? 2 : \
+											(x == GPIOD) ? 3 : \
+											(x == GPIOE) ? 4 : \
+											(x == GPIOF) ? 5 : \
+											(x == GPIOG) ? 6 : \
+											(x == GPIOH) ? 7 : 0
+
+/*******************************************************************************
+ * 						IRQ(Interrupt Request) numbers of STM32F407x MCU	   *
+ ******************************************************************************/
+#define IRQ_NO_EXTI0			6
+#define IRQ_NO_EXTI1			7
+#define IRQ_NO_EXTI2			8
+#define IRQ_NO_EXTI3			9
+#define IRQ_NO_EXTI4			10
+#define IRQ_NO_EXTI9_5			23
+#define IRQ_NO_EXTI15_10		40
+
+/*******************************************************************************
  * 						Generic macros						   				   *
  ******************************************************************************/
 #define ENABLE		1
@@ -164,5 +253,6 @@ typedef struct
 
 #define GPIO_PIN_SET		SET
 #define GPIO_PIN_RESET		RESET
+
 
 #endif /* INC_STM32F407XX_H_ */

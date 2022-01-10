@@ -53,7 +53,7 @@ typedef struct
 #define GPIO_MODE_ANALOG		3
 #define GPIO_MODE_IT_FT			4
 #define GPIO_MODE_IT_RT			5
-#define GPIIO_MODE_IT_RFT		6
+#define GPIO_MODE_IT_RFT		6
 
 // GPIO pin possible output type.
 #define GPIO_OP_TYPE_PP			0
@@ -89,7 +89,8 @@ void gpio_write_to_output_port(gpio_regdef_t *p_gpiox, int16_t value);
 void gpio_toggle_output_pin(gpio_regdef_t *p_gpiox, uint8_t pin_number);
 
 // 	IRQ configuration and ISR handling
-void gpio_irq_config(uint8_t irq_number, uint8_t irq_priority, uint8_t enable);
+void gpio_irq_interrupt_config(uint8_t irq_number, uint8_t enable);
+void gpio_irq_priority_config(uint8_t irq_number, uint8_t irq_priority);
 void gpio_irq_handling(uint8_t pin_number);
 
 #endif /* INC_STM32F407XX_GPIO_DRIVER_H_ */
