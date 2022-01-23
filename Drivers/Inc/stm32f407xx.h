@@ -69,6 +69,16 @@
 // SYSCFG peripheral base address
 #define SYSCFG_BASE_ADDR	(APB2_BASE_ADDR + 0x3800)
 
+// USART Peripheral base address
+#define USART2_BASE_ADDR	(APB1_BASE_ADDR + 0x4400)
+#define USART3_BASE_ADDR	(APB1_BASE_ADDR + 0x4800)
+#define UART4_BASE_ADDR		(APB1_BASE_ADDR + 0x4C00)
+#define UART5_BASE_ADDR		(APB1_BASE_ADDR + 0x5000)
+#define UART7_BASE_ADDR		(APB1_BASE_ADDR + 0x7800)
+#define UART8_BASE_ADDR		(APB1_BASE_ADDR + 0x7C00)
+#define USART1_BASE_ADDR	(APB2_BASE_ADDR + 0x1000)
+#define USART6_BASE_ADDR	(APB2_BASE_ADDR + 0x1400)
+
 /*******************************************************************************
  * 						Peripheral register definitions						   *
  ******************************************************************************/
@@ -76,78 +86,89 @@
 // RCC register definition structure
 typedef struct
 {
-	volatile uint32_t CR;
-	volatile uint32_t PLLCFGR;
-	volatile uint32_t CFGR;
-	volatile uint32_t CIR;
-	volatile uint32_t AHB1RSTR;
-	volatile uint32_t AHB2RSTR;
-	volatile uint32_t AHB3RSTR;
-	volatile uint32_t RESERVED1;
-	volatile uint32_t APB1RSTR;
-	volatile uint32_t APB2RSTR;
-	volatile uint32_t RESERVED2[2];
-	volatile uint32_t AHB1ENR;
-	volatile uint32_t AHB2ENR;
-	volatile uint32_t AHB3ENR;
-	volatile uint32_t RESERVED3;
-	volatile uint32_t APB1ENR;
-	volatile uint32_t APB2ENR;
-	volatile uint32_t RESERVED4[2];
-	volatile uint32_t AHB1LPENR;
-	volatile uint32_t AHB2LPENR;
-	volatile uint32_t AHB3LPENR;
-	volatile uint32_t RESERVED5;
-	volatile uint32_t APB1LPENR;
-	volatile uint32_t APB2LPENR;
-	volatile uint32_t RESERVED6[2];
-	volatile uint32_t BDCR;
-	volatile uint32_t CSR;
-	volatile uint32_t RESERVED[2];
-	volatile uint32_t SSCGR;
-	volatile uint32_t PLLI2SCFGR;
-	volatile uint32_t PLLSAICFGR;
-	volatile uint32_t DCKCFGR;
+    volatile uint32_t CR;
+    volatile uint32_t PLLCFGR;
+    volatile uint32_t CFGR;
+    volatile uint32_t CIR;
+    volatile uint32_t AHB1RSTR;
+    volatile uint32_t AHB2RSTR;
+    volatile uint32_t AHB3RSTR;
+    volatile uint32_t RESERVED1;
+    volatile uint32_t APB1RSTR;
+    volatile uint32_t APB2RSTR;
+    volatile uint32_t RESERVED2[2];
+    volatile uint32_t AHB1ENR;
+    volatile uint32_t AHB2ENR;
+    volatile uint32_t AHB3ENR;
+    volatile uint32_t RESERVED3;
+    volatile uint32_t APB1ENR;
+    volatile uint32_t APB2ENR;
+    volatile uint32_t RESERVED4[2];
+    volatile uint32_t AHB1LPENR;
+    volatile uint32_t AHB2LPENR;
+    volatile uint32_t AHB3LPENR;
+    volatile uint32_t RESERVED5;
+    volatile uint32_t APB1LPENR;
+    volatile uint32_t APB2LPENR;
+    volatile uint32_t RESERVED6[2];
+    volatile uint32_t BDCR;
+    volatile uint32_t CSR;
+    volatile uint32_t RESERVED[2];
+    volatile uint32_t SSCGR;
+    volatile uint32_t PLLI2SCFGR;
+    volatile uint32_t PLLSAICFGR;
+    volatile uint32_t DCKCFGR;
 
 } rcc_regdef_t;
 
 // GPIO register definition structure
 typedef struct
 {
-	volatile uint32_t MODER;
-	volatile uint32_t OTYPER;
-	volatile uint32_t OSPEEDR;
-	volatile uint32_t PUPDR;
-	volatile uint32_t IDR;
-	volatile uint32_t ODR;
-	volatile uint32_t BSSR;
-	volatile uint32_t LCKR;
-	volatile uint32_t AFR[2]; // Alternate function low and high registers
+    volatile uint32_t MODER;
+    volatile uint32_t OTYPER;
+    volatile uint32_t OSPEEDR;
+    volatile uint32_t PUPDR;
+    volatile uint32_t IDR;
+    volatile uint32_t ODR;
+    volatile uint32_t BSSR;
+    volatile uint32_t LCKR;
+    volatile uint32_t AFR[2]; // Alternate function low and high registers
 } gpio_regdef_t;
 
 // EXTI register definition structure
 typedef struct
 {
-	volatile uint32_t IMR;
-	volatile uint32_t EMR;
-	volatile uint32_t RTSR;
-	volatile uint32_t FTSR;
-	volatile uint32_t SWIER;
-	volatile uint32_t PR;
+    volatile uint32_t IMR;
+    volatile uint32_t EMR;
+    volatile uint32_t RTSR;
+    volatile uint32_t FTSR;
+    volatile uint32_t SWIER;
+    volatile uint32_t PR;
 } exti_regdef_t;
 
 // SYSCFG register definition structure
 typedef struct
 {
-	volatile uint32_t MEMRMP;
-	volatile uint32_t PMC;
-	volatile uint32_t EXTICR[4];
-	uint32_t RESERVED1[2];
-	volatile uint32_t CMPCR;
-	volatile uint32_t RESERVED2[2];
-	uint32_t CFGR;
+    volatile uint32_t MEMRMP;
+    volatile uint32_t PMC;
+    volatile uint32_t EXTICR[4];
+    uint32_t RESERVED1[2];
+    volatile uint32_t CMPCR;
+    volatile uint32_t RESERVED2[2];
+    uint32_t CFGR;
 } syscfg_regdef_t;
 
+// USART register definition structure
+typedef struct
+{
+    volatile uint32_t SR;
+    volatile uint32_t DR;
+    volatile uint32_t BRR;
+    volatile uint32_t CR1;
+    volatile uint32_t CR2;
+    volatile uint32_t CR3;
+    volatile uint32_t GTPR;
+} usart_regdef_t;
 
 /*******************************************************************************
  * 						Peripheral definitions						           *
@@ -173,20 +194,30 @@ typedef struct
 // SYSCFG
 #define SYSCFG		((syscfg_regdef_t *)SYSCFG_BASE_ADDR)
 
+// USART peripherals
+#define USART2		((usart_regdef_t *)USART2_BASE_ADDR)
+#define USART3		((usart_regdef_t *)USART3_BASE_ADDR)
+#define UART4		((usart_regdef_t *)UART4_BASE_ADDR)
+#define UART5		((usart_regdef_t *)UART5_BASE_ADDR)
+#define UART7		((usart_regdef_t *)UART7_BASE_ADDR)
+#define UART8		((usart_regdef_t *)UART8_BASE_ADDR)
+#define USART1		((usart_regdef_t *)USART1_BASE_ADDR)
+#define USART6		((usart_regdef_t *)USART6_BASE_ADDR)
+
 /*******************************************************************************
  * 						Clock enable and disable macros						   *
  ******************************************************************************/
 
 // GPIO clock enable
-#define GPIOA_PCLK_ENABLE()			(RCC->AHB1ENR |= (1 << 0))
-#define GPIOB_PCLK_ENABLE()			(RCC->AHB1ENR |= (1 << 1))
-#define GPIOC_PCLK_ENABLE()			(RCC->AHB1ENR |= (1 << 2))
-#define GPIOD_PCLK_ENABLE()			(RCC->AHB1ENR |= (1 << 3))
-#define GPIOE_PCLK_ENABLE()			(RCC->AHB1ENR |= (1 << 4))
-#define GPIOF_PCLK_ENABLE()			(RCC->AHB1ENR |= (1 << 5))
-#define GPIOG_PCLK_ENABLE()			(RCC->AHB1ENR |= (1 << 6))
-#define GPIOH_PCLK_ENABLE()			(RCC->AHB1ENR |= (1 << 7))
-#define GPIOI_PCLK_ENABLE()			(RCC->AHB1ENR |= (1 << 8))
+#define GPIOA_PCLK_ENABLE()         (RCC->AHB1ENR |= (1 << 0))
+#define GPIOB_PCLK_ENABLE()         (RCC->AHB1ENR |= (1 << 1))
+#define GPIOC_PCLK_ENABLE()         (RCC->AHB1ENR |= (1 << 2))
+#define GPIOD_PCLK_ENABLE()         (RCC->AHB1ENR |= (1 << 3))
+#define GPIOE_PCLK_ENABLE()         (RCC->AHB1ENR |= (1 << 4))
+#define GPIOF_PCLK_ENABLE()         (RCC->AHB1ENR |= (1 << 5))
+#define GPIOG_PCLK_ENABLE()         (RCC->AHB1ENR |= (1 << 6))
+#define GPIOH_PCLK_ENABLE()         (RCC->AHB1ENR |= (1 << 7))
+#define GPIOI_PCLK_ENABLE()         (RCC->AHB1ENR |= (1 << 8))
 
 // GPIO clock disable
 #define GPIOA_PCLK_DISABLE()		(RCC->AHB1ENR &= ~(1 << 0))
@@ -205,6 +236,26 @@ typedef struct
 // SYSCFG clock disable
 #define SYSCFG_PCLK_DISABLE()		(RCC->APB2ENR &= ~(1 << 14))
 
+// USART clock enable
+#define USART2_PCLK_ENABLE()		(RCC->APB1ENR |= (1 << 17))
+#define USART3_PCLK_ENABLE()		(RCC->APB1ENR |= (1 << 18))
+#define UART4_PCLK_ENABLE()         (RCC->APB1ENR |= (1 << 19))
+#define UART5_PCLK_ENABLE()         (RCC->APB1ENR |= (1 << 20))
+#define UART7_PCLK_ENABLE()         (RCC->APB1ENR |= (1 << 30))
+#define UART8_PCLK_ENABLE()         (RCC->APB1ENR |= (1 << 31))
+#define USART1_PCLK_ENABLE()        (RCC->APB2ENR |= (1 << 4))
+#define USART6_PCLK_ENABLE()        (RCC->APB2ENR |= (1 << 5))
+
+// USART clock disable
+#define USART2_PCLK_DISABLE()		(RCC->APB1ENR &= ~(1 << 17))
+#define USART3_PCLK_DISABLE()		(RCC->APB1ENR &= ~(1 << 18))
+#define UART4_PCLK_DISABLE()		(RCC->APB1ENR &= ~(1 << 19))
+#define UART5_PCLK_DISABLE()		(RCC->APB1ENR &= ~(1 << 20))
+#define UART7_PCLK_DISABLE()		(RCC->APB1ENR &= ~(1 << 30))
+#define UART8_PCLK_DISABLE()		(RCC->APB1ENR &= ~(1 << 31))
+#define USART1_PCLK_DISABLE()		(RCC->APB2ENR &= ~(1 << 4))
+#define USART6_PCLK_DISABLE()		(RCC->APB2ENR &= ~(1 << 5))
+
 /*******************************************************************************
  * 						MACROS TO RESET PERIPHERALS							   *
  ******************************************************************************/
@@ -220,17 +271,27 @@ typedef struct
 #define GPIOH_REG_RESET()			do { (RCC->AHB1RSTR |= (1 << 7)); (RCC->AHB1RSTR &= ~(1 << 7)); } while(0)
 #define GPIOI_REG_RESET()			do { (RCC->AHB1RSTR |= (1 << 8)); (RCC->AHB1RSTR &= ~(1 << 8)); } while(0)
 
+// Macros to reset USARTx peripherals
+#define USART2_REG_RESET()			do { (RCC->APB1RSTR |= (1 << 17)); (RCC->APB1RSTR &= ~(1 << 17)); } while(0)
+#define USART3_REG_RESET()			do { (RCC->APB1RSTR |= (1 << 18)); (RCC->APB1RSTR &= ~(1 << 18)); } while(0)
+#define UART4_REG_RESET()			do { (RCC->APB1RSTR |= (1 << 19)); (RCC->APB1RSTR &= ~(1 << 19)); } while(0)
+#define UART5_REG_RESET()			do { (RCC->APB1RSTR |= (1 << 20)); (RCC->APB1RSTR &= ~(1 << 20)); } while(0)
+#define UART7_REG_RESET()			do { (RCC->APB1RSTR |= (1 << 30)); (RCC->APB1RSTR &= ~(1 << 30)); } while(0)
+#define UART8_REG_RESET()			do { (RCC->APB1RSTR |= (1 << 31)); (RCC->APB1RSTR &= ~(1 << 31)); } while(0)
+#define USART1_REG_RESET()			do { (RCC->APB2RSTR |= (1 << 4));  (RCC->APB2RSTR &= ~(1 << 4)); } while(0)
+#define USART6_REG_RESET()			do { (RCC->APB2RSTR |= (1 << 5));  (RCC->APB2RSTR &= ~(1 << 5)); } while(0)
+
 /*******************************************************************************
  * 						Utility macros						   				   *
  ******************************************************************************/
 #define GPIO_BASE_ADDR_TO_PORT_CODE(x)		((x == GPIOA) ? 0 : \
-											 (x == GPIOB) ? 1 : \
-											 (x == GPIOC) ? 2 : \
-											 (x == GPIOD) ? 3 : \
-											 (x == GPIOE) ? 4 : \
-											 (x == GPIOF) ? 5 : \
-											 (x == GPIOG) ? 6 : \
-											 (x == GPIOH) ? 7 : 0)
+                                             (x == GPIOB) ? 1 : \
+                                             (x == GPIOC) ? 2 : \
+                                             (x == GPIOD) ? 3 : \
+                                             (x == GPIOE) ? 4 : \
+                                             (x == GPIOF) ? 5 : \
+                                             (x == GPIOG) ? 6 : \
+                                             (x == GPIOH) ? 7 : 0)
 
 /*******************************************************************************
  * 						IRQ(Interrupt Request) numbers of STM32F407x MCU	   *
@@ -252,17 +313,18 @@ typedef struct
 /*******************************************************************************
  * 						Generic macros						   				   *
  ******************************************************************************/
-#define ENABLE		1
-#define DISABLE		0
-#define	SET			ENABLE
-#define RESET		DISABLE
+#define ENABLE				1
+#define DISABLE				0
+#define	SET                 ENABLE
+#define RESET               DISABLE
 
-#define GPIO_PIN_SET		SET
-#define GPIO_PIN_RESET		RESET
+#define GPIO_PIN_SET        SET
+#define GPIO_PIN_RESET      RESET
 
 /*******************************************************************************
  * 						Driver includes						   				   *
  ******************************************************************************/
 #include "stm32f407xx_gpio_driver.h"
+#include "stm32f407xx_usart_driver.h"
 
 #endif /* INC_STM32F407XX_H_ */

@@ -13,19 +13,19 @@
 // Structure to hold pin configuration settings.
 typedef struct
 {
-	uint8_t gpio_pin_number;
-	uint8_t gpio_pin_mode;
-	uint8_t gpio_pin_speed;
-	uint8_t gpio_pin_pupd_control;
-	uint8_t gpio_pin_optype;
-	uint8_t gpio_pin_alt_func_mode;
+    uint8_t gpio_pin_number;
+    uint8_t gpio_pin_mode;
+    uint8_t gpio_pin_speed;
+    uint8_t gpio_pin_pupd_control;
+    uint8_t gpio_pin_optype;
+    uint8_t gpio_pin_alt_func_mode;
 } gpio_pin_config_t;
 
 // GPIO pin handle structure.
 typedef struct
 {
-	gpio_regdef_t *p_gpiox; // Base address of the GPIO port.
-	gpio_pin_config_t gpio_pin_config; // GPIO pin configurations settings.
+    gpio_regdef_t *p_gpiox; // Base address of the GPIO port.
+    gpio_pin_config_t gpio_pin_config; // GPIO pin configurations settings.
 } gpio_handle_t;
 
 // GPIO pin numbers.
